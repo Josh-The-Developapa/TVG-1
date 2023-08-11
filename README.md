@@ -47,4 +47,4 @@ source venv/bin/activate
 pip install -r requirements.txt
 ```
 
-Designed and developed by Joshua Mukisa
+### Designed and developed by **Joshua Mukisa**
