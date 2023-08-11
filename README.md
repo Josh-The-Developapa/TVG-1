@@ -34,7 +34,7 @@ The dataset used for training and testing TVG-1 was sourced from two Kaggle data
 
 ```bash
 # Clone the repository
-git clone https://github.com/yourusername/TVG-1.git
+git clone https://github.com/Josh-The-Developapa/TVG-1.git
 
 # Navigate to the project directory
 cd TVG-1
@@ -45,7 +45,4 @@ source venv/bin/activate
 
 # Install dependencies
 pip install -r requirements.txt
-
-# Run the TVG-1 model
-python run_tvg1.py
 ```
