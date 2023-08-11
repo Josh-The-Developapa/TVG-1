@@ -46,3 +46,5 @@ source venv/bin/activate
 # Install dependencies
 pip install -r requirements.txt
 ```
+
+Designed and developed by Joshua Mukisa
