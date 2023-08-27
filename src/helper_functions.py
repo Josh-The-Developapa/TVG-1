@@ -1,9 +1,11 @@
+import torch
 from torch.utils.data import DataLoader
 from torchvision import transforms, datasets
 from sklearn.model_selection import train_test_split
 from dataset import BrainTumourDataset
 import os
 import matplotlib.pyplot as plt
+import datetime
 
 
 def blurt(accuracy, loss):
@@ -16,11 +18,11 @@ def blurt(accuracy, loss):
 def LoadImageData(root: str, batch_size: int):
     """Function to process and load our data \n\n
     Returns the test and train dataloaders\n\n
-    Each 'class' must have a subfolder inside the root, "data" folder. So data/glioma, data/notumour, data/meningioma & data/pituita
+    Each 'class' must have a subfolder inside the root, "data" folder. So data/glioma, data/notumour, data/meningioma & data/pituitary
     """
 
-    mean = 0.5
-    std = 0.5
+    mean = 0.75
+    std = 0.75
 
     # The transforms for our dataset
     transform = transforms.Compose(
@@ -77,3 +79,79 @@ def visualise_batch_images(
         if idx == (batch_num - 1):
             matplotlib_imshow(batch, num_images, normalised)
             break
+        
+
+def train_model(model, criterion, optimiser, dataloader:DataLoader, epochs:int):
+    """A function to train our model.\n\n
+    It passes the entire dataset from a dataloader through the model, for a specified number of epochs
+    """
+    model.train()
+    
+    start = datetime.datetime.now()
+    
+    for epoch in range(epochs):
+        print(f'\n\n Epoch: {epoch}\n\n -----------------------')
+        for idx, batch in enumerate(dataloader):
+            imgs, labels = batch[0], batch[1]
+    
+            # Zero gradients
+            optimiser.zero_grad()
+    
+            # Forward pass
+            predictions = model(imgs).squeeze()
+    
+            # Calculate loss
+            loss = criterion(predictions, labels)
+    
+            # Back propagation and update parameters
+            loss.backward()
+            optimiser.step()
+
+            if idx % 100 == 0:
+                print(f"Loss: {loss} | Batch: {idx}/{len(dataloader)}")
+                
+    end = datetime.datetime.now()
+
+    # Time taken for the specified number of epochs
+    run_time = end - start
+    print(f"Run time: {run_time}")
+    
+
+def test_loop(dataloader:DataLoader, model, criterion):
+    """Function to evaluate our model's performance after training \n\n
+    Having it iterate over data it has never seen before
+    """
+    model.eval()
+    correct,total,test_loss = 0,0,0
+    
+
+    with torch.no_grad():
+        for images, labels in dataloader:
+            logits = model(images)
+            
+            # We apply sigmoid to our output as it is in logit form. As for training, nn.BCEWithLogitsLoss() automatically applies the sigmoid function for us
+            predictions = torch.round(torch.softmax(logits)).squeeze().type(torch.float32)
+            
+            test_loss+=criterion(predictions,labels)
+            correct += (predictions == labels).sum().item()
+            total += labels.size(0)
+
+    accuracy = 100 * correct / total
+    test_loss /= len(dataloader)
+    print(f"Overall Accuracy: {accuracy:.2f}% | Avg loss: {test_loss:>8f} ")    
+    
+    return accuracy, test_loss
+    
+def save_model(model, file:str):
+    '''Function to save a given model's parameters in the specified file path'''
+    torch.save(model.state_dict(), file)
+    
+def load_model(model_class, file:str):
+    '''Function to load a given model's parameters in the specified file path'''
+    loaded_model = model_class()
+    loaded_model.load_state_dict(torch.load(file))
+    return loaded_model
+
+
+    
+
