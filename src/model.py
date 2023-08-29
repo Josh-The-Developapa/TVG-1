@@ -8,6 +8,12 @@ from torch import nn
 
 
 class TVG1(nn.Module):
+    """Class for TumourVision G1 (TVG-1), a powerful Convolutional Neural Network (CNN) designed
+    to classify brain MRI scans for brain tumor detection.
+    The model is built using PyTorch and leverages Torch, TorchVision, and Matplotlib
+    libraries to achieve accurate and insightful results.
+    """
+
     def __init__(self):
         super().__init__()
 
