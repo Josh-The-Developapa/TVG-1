@@ -2,6 +2,8 @@
 
 TumourVision G1 (TVG-1) is a powerful Convolutional Neural Network (CNN) designed to classify brain MRI scans for brain tumor detection. The model is built using PyTorch and leverages Torch, TorchVision, and Matplotlib libraries to achieve accurate and insightful results.
 
+TVG-1 currently runs with a 30.04% accuracy
+
 _Note_ - `CLOD.webp` in full is Convolutional Layers' Output Dimensions. Just as an abbreviation for easy file naming
 
 ## Overview
