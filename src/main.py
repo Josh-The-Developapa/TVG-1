@@ -14,28 +14,32 @@ from helper_functions import (
 from model import TVG1
 import torch.nn.functional as F
 
-train_dataloader, test_dataloader = LoadImageData("../data", 20)
+train_dataloader, test_dataloader = LoadImageData("../data", 5)
 
 # Visualise the images in our Brain Tumour dataset
-visualise_batch_images(69, test_dataloader, 3)
+visualise_batch_images(5, test_dataloader, 3)
 
-# Define our model
-model = load_model(TVG1, "../models/TVG1.pt")  # Current model
+# Define/ Load our model
+model = load_model(model_class=TVG1, file="../models/TVG1.pt")
 
 # Define our criterion/ loss function
 criterion = nn.CrossEntropyLoss()
 
 # Define our optimiser
-optimiser = optim.SGD(model.parameters(), lr=0.1)
+optimiser = optim.SGD(model.parameters(), lr=0.0001)
 
 
 # Train our model
 train_model(model, criterion, optimiser, dataloader=train_dataloader, epochs=1)
+
+# save_model(model, "TVG1.pt")
+
+# model = load_model(model_class=TVG1, file="TVG1.pt")
 
 # Test our model
 test_model(model, criterion, test_dataloader)
 
 
 # Performance report
-# Time per epoch - 07m 39s
-# Epochs (2) - 30.04% Accuracy | 79/263 correct predictions | 1.280 avg loss
+# Time per epoch - 01m 05s
+# Epochs (2) - 56.45% Accuracy | 16/31 correct predictions | 1.073 avg loss

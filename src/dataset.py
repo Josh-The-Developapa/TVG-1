@@ -7,7 +7,7 @@ import torch.nn.functional as F
 class BrainTumourDataset(Dataset):
     """This is a custom dataset for our 200x200 MRI scans of human brains for Multi-class classification
     We'll feed this into a dataloader \n\n
-    0-glioma | 1-meningioma | 2-notumour | 3-pituitary
+    0-meningioma | 1-glioma | 2-pituitary
     """
 
     def __init__(self, dataset, transform):
@@ -25,6 +25,6 @@ class BrainTumourDataset(Dataset):
         image = self.transform(imagePIL)
 
         # tensor of the label of an image according to the index. i.e ('data/glioma/0.jpg',0) -> torch.tensor(0)
-        label = F.one_hot(torch.tensor(self.dataset[index][1]), 4).type(torch.float32)
+        label = F.one_hot(torch.tensor(self.dataset[index][1]), 3).type(torch.float32)
 
         return image, label

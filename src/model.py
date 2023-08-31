@@ -34,7 +34,7 @@ class TVG1(nn.Module):
             nn.ReLU(),
             nn.Linear(740, 100),
             nn.ReLU(),
-            nn.Linear(100, 4),
+            nn.Linear(100, 3),
         )
 
     def forward(self, x: torch.Tensor) -> torch.Tensor:

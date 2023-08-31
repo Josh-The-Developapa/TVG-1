@@ -20,18 +20,14 @@ def blurt(accuracy: float, loss: float):
 def LoadImageData(root: str, batch_size: int):
     """Function to process and load our data \n\n
     Returns the test and train dataloaders\n\n
-    Each 'class' must have a subfolder inside the root, "data" folder. So data/glioma, data/notumour, data/meningioma & data/pituitary
+    Each 'class' must have a subfolder inside the root, "data" folder. So data/NoTumour & data/HasTumour
     """
-
-    # mean = (0.68,0.68,0.68)
-    # std = (0.68,0.68,0.68)
 
     # The transforms for our dataset
     transform = transforms.Compose(
         [
             transforms.Resize((200, 200)),
             transforms.ToTensor(),
-            # transforms.Normalize(mean, std),
         ]
     )
     # ImageFolder dataset containing paths and labels of images.
@@ -39,7 +35,7 @@ def LoadImageData(root: str, batch_size: int):
 
     # Split our data into train and test data and labels
     train_data, test_data, train_labels, test_labels = train_test_split(
-        dataset.imgs, dataset.targets, test_size=0.2, random_state=42
+        dataset.imgs, dataset.targets, test_size=0.1, random_state=42
     )
 
     train_dataset = BrainTumourDataset(train_data, transform)
@@ -55,7 +51,7 @@ def matplotlib_imshow(batch: list, num_images: int):
     """Function for producing an inline display
     of a set number images in a given batch"""
 
-    classes = ("glioma", "meningioma", "notumour", "pituitary")
+    classes = ("meningioma", "glioma", "pituitary")
 
     # Fetch only the first (num_images)th
     batch = [(batch[0][0:num_images]), batch[1][0:num_images]]
@@ -94,10 +90,10 @@ def train_model(
 
     for epoch in range(epochs):
         print(f"\n\n Epoch: {epoch}\n\n -----------------------")
-        for idx,batch in enumerate(dataloader):
-            imgs,labels = batch[0], batch[1]
+        for idx, batch in enumerate(dataloader):
+            imgs, labels = batch[0], batch[1]
 
-            #Zero gradients
+            # Zero gradients
             optimiser.zero_grad()
 
             # Forward pass
@@ -132,7 +128,7 @@ def test_model(model: torch.nn.Module, criterion, dataloader: DataLoader):
     correct = 0
 
     with torch.no_grad():
-        for images,labels in dataloader:
+        for images, labels in dataloader:
             output = model(images)
             test_loss += criterion(output, labels)
 
