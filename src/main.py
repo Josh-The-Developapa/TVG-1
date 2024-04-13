@@ -11,14 +11,15 @@ from helper_functions import (
     load_model,
 )
 from model import TVG1
+import os
 
-train_dataloader, test_dataloader = LoadImageData("data", 5)
+train_dataloader, test_dataloader = LoadImageData("../data", 5)
 
 # Visualise the images in our Brain Tumour dataset
 visualise_batch_images(5, test_dataloader, 3)
 
 # Define / Load our model
-model = load_model(model_class=TVG1, file="models/TVG1.pt")
+model = load_model(model_class=TVG1, file="../models/TVG1.pt")
 
 
 # Define our criterion/ loss function
