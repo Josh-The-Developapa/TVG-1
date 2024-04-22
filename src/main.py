@@ -11,7 +11,6 @@ from helper_functions import (
     load_model,
 )
 from model import TVG1
-import os
 
 train_dataloader, test_dataloader = LoadImageData("../data", 5)
 
