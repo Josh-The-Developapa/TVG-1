@@ -26,14 +26,22 @@ The dataset used for training and testing TVG-1 was sourced from two Kaggle data
 
 ## Installation
 
+You can install "TumorVision" via pip by running:
+
+```bash
+pip install tumorvision
+```
+
+Alternatively, if you prefer to install it from the source code, you can follow these steps:
+
 1. Clone the TVG-2 repository:
 ```bash
-git clone https://github.com/asiimwemmanuel/TVG-2.git
+git clone https://github.com/Josh-The-Developapa/TumorVision.git
 ```
 
 2. Navigate to the project directory:
 ```bash
-cd TVG-2
+cd TumorVision
 ```
 
 3. Set up a Python virtual environment (recommended):
