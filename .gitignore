@@ -3,6 +3,5 @@ lib
 share
 __pycache__
 pyvenv.cfg
-data
 bin
-.DS_Store
+.DS_Stores
